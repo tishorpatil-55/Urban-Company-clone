@@ -7,7 +7,7 @@ import BookingForm from "./pages/BookingForm";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-// import ProtectedRoute from "./components/ProtectedRoute"; // Implementing next
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
@@ -20,8 +20,13 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/services" element={<ServiceList />} />
-            <Route path="/book" element={<BookingForm />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/book" element={<BookingForm />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+
             <Route path="/admin" element={<div className="p-8 text-center">Admin (Coming Soon)</div>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
