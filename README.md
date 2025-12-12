@@ -1,70 +1,126 @@
-# React + Vite
+# Urban Company Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application replicating the core functionalities of Urban Company, a gig marketplace for home services. This project facilitates service booking, user authentication, and management for both customers and service providers.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Frontend (Client-Side)
+- **User Authentication**: Secure Login and Signup pages.
+- **Service Browsing**: View available home services (`ServiceList`).
+- **Service Booking**: Interactive booking form to schedule services (`BookingForm`).
+- **Dashboard**: User dashboard to view booking history and profile (`Dashboard`).
+- **Responsive Design**: Built with Tailwind CSS for a seamless mobile and desktop experience.
+- **Navigation**: Client-side routing with React Router.
 
-## React Compiler
+### Backend (Server-Side)
+- **RESTful API**: Built with Node.js and Express. It provides endpoints for authentication, services, and bookings.
+- **Database**: MongoDB with Mongoose for data modeling.
+- **Authentication**: JWT (JSON Web Token) implementation for secure route protection.
+- **Security**: Password hashing using bcryptjs.
+- **CORS Support**: Configured to allow requests from the frontend application.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+### Frontend
+- **Framework**: [React](https://react.dev/) (v19)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Linting**: ESLint
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-# Backend Overview
-
-The backend of this Urban Company Clone is built using **Node.js** and **Express.js**, with **MongoDB** as the database. It follows the **MVC (Model-View-Controller)** architecture to ensure a clean separation of concerns.
-
-## 🛠 Tech Stack
-
--   **Runtime**: Node.js
--   **Framework**: Express.js
--   **Database**: MongoDB (with Mongoose ODM)
--   **Authentication**: JSON Web Tokens (JWT) & bcryptjs
--   **Environment Management**: dotenv
--   **CORS**: Enabled for cross-origin requests
+### Backend
+- **Runtime**: [Node.js](https://nodejs.org/)
+- **Framework**: [Express.js](https://expressjs.com/)
+- **Database**: [MongoDB](https://www.mongodb.com/)
+- **ODM**: [Mongoose](https://mongoosejs.com/)
+- **Authentication**: JWT & bcryptjs
 
 ## 📂 Project Structure
 
--   `server.js`: Entry point of the application. Connects to the database and initializes routes.
--   `config/`: Configuration files (e.g., Database connection logic).
--   `controllers/`: Contains the business logic for handling requests (Auth, Services, Bookings).
--   `models/`: Mongoose schemas defining the data structure (User, Service, etc.).
--   `routes/`: API route definitions mapping endpoints to controllers.
--   `middleware/`: Custom middleware (e.g., Authentication protection).
+```bash
+Urban-Company-clone/
+├── backend/                # Server-side application
+│   ├── config/             # Database configuration
+│   ├── controllers/        # Request handlers
+│   ├── models/             # Mongoose schemas
+│   ├── routes/             # API routes
+│   └── server.js           # Entry point
+├── src/                    # Client-side application
+│   ├── components/         # Reusable UI components
+│   ├── context/            # React Context API files
+│   ├── pages/              # Application pages (Home, Login, Dashboard, etc.)
+│   ├── App.jsx             # Main App component
+│   └── main.jsx            # DOM renderer
+├── public/                 # Static assets
+└── index.html              # HTML entry point
+```
 
-## 🔑 Key Features
+## ⚙️ Installation & Setup
 
-1.  **Authentication**:
-    -   User registration and login.
-    -   Password hashing using `bcryptjs`.
-    -   JWT-based session management.
+Prerequisites: Ensure you have **Node.js** and **npm** installed on your machine. You will also need a local or cloud **MongoDB** instance (e.g., MongoDB Atlas).
 
-2.  **Service Management**:
-    -   API to fetch available services.
-    -   Provider-specific routes to create new services (protected).
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/Urban-Company-clone.git
+cd Urban-Company-clone
+```
 
-3.  **Booking System**:
-    -   Endpoints to manage bookings (Create, Read, Update, Delete).
+### 2. Backend Setup
+Navigate to the backend directory and install dependencies:
+```bash
+cd backend
+npm install
+```
 
-## 🚀 Getting Started
+Create a `.env` file in the `backend` directory and add your environment variables:
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+```
 
-1.  Navigate to the backend directory:
-    ```bash
-    cd backend
-    ```
-2.  Install dependencies:
-    ```bash
-    npm install
-    ```
-3.  Set up environment variables in a `.env` file (PORT, MONGO_URI, JWT_SECRET).
-4.  Start the server:
-    ```bash
-    npm start
-    # or for development
-    npm run dev
-    ```
+Start the backend server:
+```bash
+npm run dev
+# Server should run on http://localhost:5000
+```
+
+### 3. Frontend Setup
+Open a new terminal, navigate to the root directory (where `vite.config.js` is located), and install dependencies:
+```bash
+npm install
+```
+
+**Note**: If you encounter issues with Tailwind, ensure you have the necessary dev dependencies installed:
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+Start the React development server:
+```bash
+npm run dev
+# App should run on http://localhost:5173
+```
+
+## 📡 API Endpoints
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **POST** | `/api/auth/register` | Register a new user |
+| **POST** | `/api/auth/login` | Login user & get token |
+| **GET** | `/api/services` | Get all available services |
+| **POST** | `/api/bookings` | Create a new booking |
+| **GET** | `/api/bookings` | Get user bookings |
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Open a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
