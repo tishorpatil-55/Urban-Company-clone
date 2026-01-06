@@ -7,6 +7,7 @@ const Dashboard = () => {
     const { user, logout } = useContext(AuthContext);
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -15,17 +16,12 @@ const Dashboard = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${user.token}` }
                 };
-                const { data } = await axios.get('/api/bookings/mybookings', config);
+                const { data } = await axios.get('/api/bookings', config);
                 setBookings(data);
             } catch (error) {
                 console.error("Failed to fetch bookings", error);
                 // Mock data for display if backend fails
-                if (bookings.length === 0) {
-                    setBookings([
-                        { _id: '101', service: { name: 'Home Cleaning' }, date: '2025-12-10', time: '10:00', status: 'Confirmed' },
-                        { _id: '102', service: { name: 'AC Repair' }, date: '2025-12-15', time: '14:00', status: 'Pending' }
-                    ]);
-                }
+                setError("Failed to load bookings.");
             } finally {
                 setLoading(false);
             }
@@ -74,6 +70,7 @@ const Dashboard = () => {
             </div>
 
             <h3 className="text-xl font-bold text-gray-900 mb-4">Your Bookings</h3>
+            {error && <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">{error}</div>}
 
             {loading ? (
                 <p className="text-gray-500">Loading bookings...</p>
